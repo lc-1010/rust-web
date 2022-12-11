@@ -21,14 +21,13 @@ impl Router {
                             },
                         }
                     },
-                
-                _ =>{
-                    let resp:HttpResponse = PageNotFoundHandler::handler(&req);
-                    let _ = resp.send_response(stream);
-                },
-            }
+            },
+            _ =>{
+                let resp:HttpResponse = PageNotFoundHandler::handler(&req);
+                let _ = resp.send_response(stream);
+            },
            // httprequest::Method::Post => todo!(),
-            //httprequest::Method::Uninitialized => todo!(),
+         //httprequest::Method::Uninitialized => todo!(),
         }
 
     }

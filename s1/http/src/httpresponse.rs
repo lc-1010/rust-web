@@ -26,13 +26,14 @@ impl <'a >Default for HttpResponse <'a>{
 impl <'a>From<HttpResponse<'a>> for String {
     fn from(res: HttpResponse<'a> )->Self {
         let res1 = res.clone();
+        println!("body==>{:?}",&res.body());
         format!(
             "{} {} {} \r\n{}Content-Length: {}\r\n\r\n{}",
             &res1.versions(),
             &res1.status_code(),
             &res1.status_text(),
             &res1.headers(),
-            &res.body.unwrap().len(),
+            &res.body.unwrap_or("".to_string()).len(),//处理None 
             &res1.body(),
         )
     }

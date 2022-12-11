@@ -73,19 +73,20 @@ impl Handler for WebServiceHandler {
         let route:Vec<&str> = s.split("/").collect();
         //localhost:3000/api/shiping/orders
         match route[2] {
-            "" => HttpResponse::new("404",None,Self::load_file("404.html")),
             "shipping" if route.len()> 2 && route[3] == "orders" => {
                 let body = Some(serde_json::to_string(&Self::load_json()).unwrap());
                 let mut headers:HashMap<&str,&str> = HashMap::new();
                 headers.insert("Content-type","text/json");
                 HttpResponse::new("200",Some(headers),body)
             },
+            _ => HttpResponse::new("404",None,Self::load_file("404.html")),
         }
     }
 }
 impl Handler for PageNotFoundHandler {
-   fn handler(req:&HttpRequest)->HttpResponse {
-         HttpResponse::new("404",
+   fn handler(req: &HttpRequest)->HttpResponse {
+        println!("Not Found Handle{:?}",req);
+        HttpResponse::new("404",
             None, 
             Self::load_file("404.html"))
    } 
