@@ -1,7 +1,9 @@
 use sqlx::postgres::PgPool;
 use chrono::NaiveDateTime;
-use super::models::*;
-use super::errors::MyError;
+use crate::errors::MyError;
+use crate::models::course::Course;
+
+
 pub async fn get_course_for_teacher_db(pool: &PgPool, teacher_id: i32)->Result<Vec<Course>, MyError>{
     let rows = sqlx::query!(//r# 多行
         r#"SELECT id, teacher_id, name, 

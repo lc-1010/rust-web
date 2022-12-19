@@ -1,17 +1,5 @@
- 
 use actix_web::{web, HttpResponse};
-use super::{ state::AppState, models::Course, db_access::*, errors::*};
-
-//注入数据
-pub async fn health_check_handler(app_state: web::Data<AppState> )->HttpResponse{
-    let  health_check_response = &app_state.health_check_response;
-    // 获取锁
-    let mut visit_count = app_state.visit_count.lock().unwrap();
-    let response = format!("{} {} times",health_check_response, visit_count);
-    // 改值 
-    *visit_count +=1;
-    HttpResponse::Ok().json(&response)
-}
+use crate::{state::AppState, dbaccess::course::*, models::course::Course, errors::MyError};
 
 pub async fn get_course_for_teacher(params: web::Path<(usize,)>, app_state:web::Data<AppState>)->Result< HttpResponse,MyError> {
     let (teacher_id,)= params.into_inner();
